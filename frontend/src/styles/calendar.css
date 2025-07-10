@@ -1,0 +1,58 @@
+/* Evenimente */
+.fc-event {
+    background-color: #4f46e5 !important;  /* Indigo 600 */
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 4px 8px !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  /* Hover pe eveniment */
+  .fc-event:hover {
+    background-color: #4338ca !important; /* Indigo 700 */
+    cursor: pointer;
+  }
+  
+  /* Celulele zilelor */
+  .fc-daygrid-day {
+    background-color: #f9fafb; /* Gray-50 */
+    border: 1px solid #e5e7eb; /* Gray-200 */
+  }
+  
+  .fc-daygrid-day.fc-day-today {
+    background-color: #e0f2fe !important; /* Blue-100 */
+  }
+  
+  /* Header-ul */
+  .fc-toolbar-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1f2937; /* Gray-800 */
+  }
+  
+  .fc-button {
+    background-color: #4f46e5;
+    border: none;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+  
+  .fc-button:hover {
+    background-color: #4338ca;
+  }
+  
+  /* Navigație lună/săptămână */
+  .fc-button-group > .fc-button {
+    margin-right: 4px;
+  }
+  
+  /* Grilă */
+  .fc-scrollgrid {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  
