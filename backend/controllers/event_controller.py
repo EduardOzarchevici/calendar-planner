@@ -3,7 +3,7 @@ from flask_jwt_extended import get_jwt_identity
 from models import db, Event
 from datetime import date
 
-def resolve_get_posts_by_user(user_id):
+def resolve_get_events_by_user(user_id):
     try:
         events = Event.query.filter_by(user_id=user_id).all()
         event_list = [{
@@ -17,24 +17,24 @@ def resolve_get_posts_by_user(user_id):
         return jsonify({"message": f"Error fetching events: {str(e)}"}), 500
 
 
-def resolve_add_user(user_id):
+def resolve_add_event(user_id):
     try:
         data = request.json
 
         title = data.get("title")
-        #date_str = data.get("date")
+        date_str = data.get("date")
 
-        if not title:
+        if not title or not date_str:
             return jsonify({"message": "Title and date are required"}), 400
 
-        # try:
-        #     event_date = date.fromisoformat(date_str)
-        # except ValueError:
-        #     return jsonify({"message": "Invalid date format. Use YYYY-MM-DD."}), 400
+        try:
+            event_date = date.fromisoformat(date_str)
+        except ValueError:
+            return jsonify({"message": "Invalid date format. Use YYYY-MM-DD."}), 400
 
         new_event = Event(
             title=title,
-            #date=event_date,
+            date=event_date,
             user_id=user_id
         )
 
@@ -55,7 +55,7 @@ def resolve_add_user(user_id):
         return jsonify({"message": f"Error creating event: {str(e)}"}), 500
 
 
-def resolve_delete_post(event_id):
+def resolve_delete_event(event_id):
     try:
         event = Event.query.get(event_id)
 
