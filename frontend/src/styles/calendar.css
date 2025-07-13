@@ -1,58 +1,191 @@
 /* Evenimente */
 .fc-event {
-    background-color: #4f46e5 !important;  /* Indigo 600 */
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 4px 8px !important;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-  
-  /* Hover pe eveniment */
-  .fc-event:hover {
-    background-color: #4338ca !important; /* Indigo 700 */
-    cursor: pointer;
-  }
-  
-  /* Celulele zilelor */
-  .fc-daygrid-day {
-    background-color: #f9fafb; /* Gray-50 */
-    border: 1px solid #e5e7eb; /* Gray-200 */
-  }
-  
-  .fc-daygrid-day.fc-day-today {
-    background-color: #e0f2fe !important; /* Blue-100 */
-  }
-  
-  /* Header-ul */
-  .fc-toolbar-title {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #1f2937; /* Gray-800 */
-  }
-  
-  .fc-button {
-    background-color: #4f46e5;
-    border: none;
-    color: white;
-    font-weight: 500;
-    border-radius: 6px;
-    padding: 6px 12px;
-  }
-  
-  .fc-button:hover {
-    background-color: #4338ca;
-  }
-  
-  /* Navigație lună/săptămână */
-  .fc-button-group > .fc-button {
-    margin-right: 4px;
-  }
-  
-  /* Grilă */
-  .fc-scrollgrid {
-    border-radius: 16px;
-    overflow: hidden;
-  }
-  
+  background-color: #4f46e5 !important; /* Indigo 600 */
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Hover pe eveniment */
+.fc-event:hover {
+  background-color: #4338ca !important; /* Indigo 700 */
+  cursor: pointer;
+}
+
+/* Celulele zilelor */
+.fc-daygrid-day {
+  background-color: #f9fafb; /* Gray-50 */
+  border: 1px solid #e5e7eb; /* Gray-200 */
+}
+
+.fc-daygrid-day.fc-day-today {
+  background-color: #e0f2fe;
+}
+
+/* Header-ul */
+.fc-toolbar-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1f2937; /* Gray-800 */
+}
+
+.fc-button {
+  background-color: #4f46e5;
+  border: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+.fc-daygrid-day-frame {
+  padding: 0px 3px 5px 3px;
+}
+.fc-daygrid-day-frame:hover {
+  background-color: #e5e7eb;
+}
+.fc-button:hover {
+  background-color: #4338ca;
+}
+
+/* Navigație lună/săptămână */
+.fc-button-group > .fc-button {
+  margin-right: 4px;
+}
+
+/* Grilă */
+.fc-scrollgrid {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.calendar-wrapper {
+  max-width: 1000px;
+  min-width: 350px;
+
+  margin: 40px auto;
+  padding: 10px 5px 5px 5px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.fc-col-header-cell {
+  background-color: #e5e7eb;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Fundalul semi-transparent */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* fundal negru transparent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Fereastra propriu-zisă */
+.modal-content {
+  background-color: #ffffff;
+  padding: 24px 32px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Titlul */
+.modal-content h2 {
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Lista de evenimente */
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.modal-content li {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #374151;
+}
+
+/* Input */
+.modal-content input[type='text'] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.modal-content input[type='text']:focus {
+  border-color: #4f46e5;
+}
+
+/* Butoane */
+.modal-content button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-right: 8px;
+}
+
+/* Buton Adaugă */
+.modal-content button:first-of-type {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.modal-content button:first-of-type:hover {
+  background-color: #4338ca;
+}
+
+/* Buton Închide */
+.modal-content button:last-of-type {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.modal-content button:last-of-type:hover {
+  background-color: #d1d5db;
+}
+/* Containerul listei de evenimente */
+.modal-event-list {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  padding-right: 4px; /* opțional, spațiu pentru scrollbar */
+}
+
+/* Scroll elegant */
+.modal-event-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-event-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}

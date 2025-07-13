@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: flask_backend_calendar
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    container_name: my_postgres_calendar
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: calenderpalnnerdb
+    ports:
+      - "9000:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
