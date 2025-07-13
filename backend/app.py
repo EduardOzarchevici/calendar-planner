@@ -2,7 +2,7 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy import text
 from routes import create_app
 from models import db
-cd
+
 
 app = create_app()
 with app.app_context():
