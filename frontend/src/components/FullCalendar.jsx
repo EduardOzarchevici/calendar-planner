@@ -4,26 +4,11 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import axios from 'axios';
 import '../styles/calendar.css';
-import { isMultiDayRange } from '@fullcalendar/core/internal';
 
 const MyCalendar = () => {
-  const [eventList, setEventList] = useState([
-    { title: 'Eveniment test', date: '2025-07-15', id: 1 },
-    { title: 'Întâlnire', date: '2025-07-18', id: 2 },
-    {
-      title: 'Important',
-      date: '2025-07-15',
-      className: 'important-event',
-      id: 3,
-    },
-    {
-      title: 'Important',
-      date: '2025-07-15',
-      className: 'important-event',
-      id: 4,
-    },
-  ]);
+  const [eventList, setEventList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -31,38 +16,90 @@ const MyCalendar = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [newEventTitle, setNewEventTitle] = useState('');
 
+  const token = localStorage.getItem('token');
+  const apiBase = 'https://calendar-planner-api-nwpq.onrender.com/api/events';
+
+  useEffect(() => {
+    if (!token) return;
+    const fetchEvents = async () => {
+      try {
+        setIsLoading(true);
+        localStorage.getItem('token');
+        const res = await axios.get(apiBase, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log('Evenimente primite din backend:', res.data);
+        setEventList(res.data);
+      } catch (err) {
+        console.error('Eroare la încărcarea evenimentelor:', err);
+        setErrorMessage('Eroare la încărcarea evenimentelor.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [token]);
+
   const handleDateClick = (info) => {
     const clickedDate = info.dateStr;
     setSelectedDate(clickedDate);
 
     const eventsForDay = eventList.filter((ev) => ev.date === clickedDate);
-    console.log('Events:', eventsForDay);
     setFilteredEvents(eventsForDay);
     setShowModal(true);
   };
 
-  const addEvent = () => {
-    const newEvent = {
-      id: Date.now(),
-      title: newEventTitle,
-      date: selectedDate,
-    };
-    setEventList([...eventList, newEvent]);
-    setNewEventTitle('');
-    setShowModal(false);
+  const addEvent = async () => {
+    try {
+      const newEvent = {
+        title: newEventTitle,
+        date: selectedDate,
+      };
+      localStorage.getItem('token');
+      const res = await axios.post(apiBase, newEvent, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setEventList((prev) => [...prev, res.data.event]);
+      setFilteredEvents((prev) => [...prev, res.data.event]);
+      setNewEventTitle('');
+      setShowModal(false);
+    } catch (err) {
+      console.error('Eroare la adăugare:', err);
+      alert('Nu s-a putut adăuga evenimentul.');
+    }
   };
 
-  const deleteEvent = (id) => {
-    const updatedList = eventList.filter((ev) => ev.id !== id);
-    setEventList(updatedList);
+  const deleteEvent = async (id) => {
+    try {
+      localStorage.getItem('token');
+      await axios.delete(`${apiBase}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    // Dacă ștergi în timp ce modalul e deschis, actualizează și filteredEvents
-    const updatedFiltered = filteredEvents.filter((ev) => ev.id !== id);
-    setFilteredEvents(updatedFiltered);
+      const updatedList = eventList.filter((ev) => ev.id !== id);
+      setEventList(updatedList);
+
+      const updatedFiltered = filteredEvents.filter((ev) => ev.id !== id);
+      setFilteredEvents(updatedFiltered);
+    } catch (err) {
+      console.error('Eroare la ștergere:', err);
+      alert('Nu s-a putut șterge evenimentul.');
+    }
   };
 
   return (
     <div className="calendar-wrapper">
+      {isLoading && <p>Se încarcă evenimentele...</p>}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -96,13 +133,13 @@ const MyCalendar = () => {
               type="text"
               value={newEventTitle}
               onChange={(e) => setNewEventTitle(e.target.value)}
+              placeholder="Titlu eveniment"
             />
             <button onClick={addEvent}>Adaugă</button>
             <button onClick={() => setShowModal(false)}>Închide</button>
           </div>
         </div>
-          )}
-          
+      )}
     </div>
   );
 };
