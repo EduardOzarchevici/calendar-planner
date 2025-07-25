@@ -11,21 +11,22 @@ const Register = ({ onRegister }) => {
     e.preventDefault();
     try {
       // Înregistrare
-      await axios.post(
+      const res = await axios.post(
         'https://calendar-planner-api-nwpq.onrender.com/api/register',
         {
           username,
           password,
         }
       );
-      // Autentificare automată după înregistrare
-      const res = await axios.post(
-        'https://calendar-planner-api-nwpq.onrender.com/login',
-        {
-          username,
-          password,
-        }
-      );
+      // // Autentificare automată după înregistrare
+      // const res = await axios.post(
+      //   'https://calendar-planner-api-nwpq.onrender.com/login',
+      //   {
+      //     username,
+      //     password,
+      //   }
+      // );
+      
       localStorage.setItem('token', res.data.token);
       onRegister();
     } catch (err) {
@@ -34,7 +35,7 @@ const Register = ({ onRegister }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}  className='auth-form'>
+    <form onSubmit={handleSubmit} className="auth-form">
       <h2>Înregistrare</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <input

@@ -20,6 +20,6 @@ def add_event_route():  # nume unic
 @jwt_required()
 def delete_event_route(event_id):  # nume unic
     return resolve_delete_event(event_id)
-    
+
 
 
